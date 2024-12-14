@@ -10,7 +10,10 @@
     git add .                                           (For all files in the entire directory ignoring the deleted ones .i.e, doesn't removes anything) {.i.e, EXCEPT HIDDEN FILES and DELETED CHANGES}
     git add *                                           (For all files in the directory excluding only files startinng with . in it's name (i.e., hidden files) in root directory but not in child ones wihtout removing anything) {i.e, EXCEPT HIDDEN FILES}
     git add *.type                                      (For all files in the directory with a specific type .i.e, like a filter) {i.e, ONLY FILTERD FILES}
-                
+
+~> To discard changes in working directory undoing the latest changes
+    git restore <file>
+
 ~> To commit changes to git project:
     git commit -m "Commit message"
 
@@ -43,6 +46,11 @@
     git clean -n                (For Simulation Cleaning)
     git clean -i                (For Interactive Cleaning)
 
+~> For file system checkup:
+    git fsck
+
+~> For fixing Dangling files:
+    git gc --prune=now
 
 ~> In VS Code:
     After integrating it with git and github we see different color and letter labels in each file.

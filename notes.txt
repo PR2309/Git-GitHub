@@ -53,8 +53,9 @@
     It only exists locally in offline device not on internet for now.
     .git folder is a hidden directory and it might not be visible to the user, to make it visible  allow to show hiddlen files in folder properties.
         To see hidden file also write the command:
-            ls -a
-            ls -la
+            ls -a   (all normal and hidden files)
+            ls -la  (all normal and hidden files listed)
+            ls -h   (all hidden files except . and ..)
             "Ctrl+H" in windows GUI
             "Command+Shift+Dot"  in Mac
     .git folder is basically a local git server which gets connected to online git server present in the repository.
@@ -89,6 +90,8 @@
         (For all files in the directory with a specific type)
                 git add *.type
         
+*~> To discard changes in working directory undoing the latest changes
+    git restore <file>
 
 ~> To save the changes we did we need to commit them.
     This is where action takes place to those which were updated locally but not on github, and also those which were added and ready to be saved in github repository.
@@ -134,11 +137,45 @@
         git push origin master
         git push origin main
 
-~> To get version history, commit ID & latest commit message:
+*~> To get version history, commit ID & latest commit message:
     git log
 
-~> To add a tag  using commit ID:
+*~> To add a tag using commit ID:
+    Tags help us to label many things like versions.
+    It's so important in version control.
     git tag <tag> <commit ID> 
+
+*~> For file system checkup:
+    Purpose
+        - Detect Corrupted Objects: Identifies corrupted blobs, commits, trees, or tags in your repository.
+        - Identify Broken Links: Reports dangling references (e.g., objects no longer connected to any branch or tag).
+        - Verify Integrity: Ensures that all objects and their relationships in the .git directory are intact.
+        - Help Debug Issues: Useful for troubleshooting issues like repository corruption or missing data.
+    When to Use
+        - After encountering errors like missing objects or lock files.
+        - To check repository health after a system crash or unexpected interruption during Git operations.
+        - If your repository behaves abnormally (e.g., commits not showing, missing files).
+    Outputs
+        - Healthy Repository:
+            Checking object directories: 100% (256/256), done.
+            Checking objects: 100% (1000/1000), done.
+        - Corruption Detected:
+            missing blob 9a2e56a8cd12bb8cd5af...
+            dangling commit 4b825dc642cb6eb9...
+    Fixing 
+        - Dangling Objects: Usually safe to ignore unless you need them (e.g., unreferenced commits). To clean them:
+            git gc --prune=now
+        -Corrupted Objects: You might need to restore from backups or fetch the missing data from a remote repository.
+    command:
+        git fsck
+
+*~> Fixing Dangling Objects:
+    git gc Stands for Git Garbage Collection.
+    It cleans up unnecessary files and optimizes the local repository.
+    Normally, Git keeps unreachable objects for a grace period (default: 2 weeks) before removing them.
+    The --prune=now option tells Git to remove all unreachable objects immediately, without waiting for the grace period.
+    command:
+        git gc --prune=now
 
 ~> To remove Untracked files
     It’s important to emphasize that untracked files do no harm; you could just leave them where they are.
@@ -163,18 +200,18 @@
                 <file1.type1> <file2.type2>
             *** Commands ***
                 1: clean
-                    (Removes all files)
+                    (if we press 1 or c it removes all files)
                 2: filter by pattern
-                    (filters a particular type of filename patterns, if we press 2  then add filter *.md, then i get all files not haveing.md in their names and we can decide what to do with them after it)
+                    (if we press 2 or f it filters a particular type of filename patterns, if we press 2 or f then add filter *.md, then i get all files not haveing.md in their names and we can decide what to do with them after it)
                 3: select by numbers
-                    (gives a labelled menu and for option number to delete that particular file)
-                    (to select multiple files enter s then  comma seperated noption numbers i.e, 1,2,etc)
+                    (if we press 3 or s gives a labelled menu and for option number to delete that particular file)
+                    (to select multiple files enter s then comma seperated option numbers i.e, 1,2,etc)
                 4: ask for each
-                    (it asks [y/N]? for each file)
+                    (if we press 4 or a it asks [y/N]? for each file)
                 5: quit
-                    (can access with q or 5 git will display a message "Bye" wihtout harming files)
+                    (if we press 5 or q git will display a message "Bye" wihtout harming files)
                 6: help
-                    (can access with h or 6—displays a useful yet concise help screen)
+                    (if we press h or 6 it displays a useful yet concise help screen)
     However, if you want to remove them, you can use the following command:
     command:
     git rm --cached <filename>
@@ -184,9 +221,9 @@
     these are:
         • - (green/yellow/red) ➡ Changes detected inside that directory based on the color of the dot as mentioned below.
         U - (Green) ➡ Untracked => Neither commited nor added to git repository.
-        A - (Green) ➡ Added = > Newly added but not commited into git repository.
-        M - (Yellow) ➡ Modified = > Already added (or/and commited maybe) to git repository but modified locally.
-        D - (Red) ➡ Deleted = > Already added (or/and commited maybe) to git repository but deleted locally.
+        A - (Green) ➡ Added => Newly added but not commited into git repository.
+        M - (Yellow) ➡ Modified => Already added (or/and commited maybe) to git repository but modified locally.
+        D - (Red) ➡ Deleted => Already added (or/and commited maybe) to git repository but deleted locally.
 
 ~> We can also see the branch name in the bottom left corner of the VS Code window
 

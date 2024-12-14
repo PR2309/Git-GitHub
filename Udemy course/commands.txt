@@ -19,7 +19,6 @@
 
 ~> To setup email of Github ID:
     git config --global user.email "email@gmail.com"
-
 ~> To setup user name of Github ID:
     git config --global user.email "User Name"
 
@@ -28,6 +27,16 @@
 
 ~> To send  to remote repository:
     git push origin master
+
+
+
+
+
+~> To get version history, commit ID & latest commit message:
+    git log
+
+~> To add a tag  using commit ID:
+    git tag <tag> <commit ID> 
 
 ~> To clean untracked files from repository:
     git clean -f                (For all files)

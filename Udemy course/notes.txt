@@ -126,7 +126,7 @@
     command:
         git remote add origin <server>
 
-~> To send  to remote repository:
+~> To send to remote repository:
     after this command it will ask for  username and then password of Github ID.
     here password typing won't be visible to the user.
     master and main are just types of branches.
@@ -134,7 +134,11 @@
         git push origin master
         git push origin main
 
+~> To get version history, commit ID & latest commit message:
+    git log
 
+~> To add a tag  using commit ID:
+    git tag <tag> <commit ID> 
 
 ~> To remove Untracked files
     It’s important to emphasize that untracked files do no harm; you could just leave them where they are.

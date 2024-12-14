@@ -15,7 +15,8 @@
     git restore <file>
 
 ~> To commit changes to git project:
-    git commit -m "Commit message"
+    git commit -m "Commit message"                         (To commit stated changes)
+    git commit -a -m "Commit message"                      (To add and commit changes together)
 
 ~> To check git repository status:
     git status
@@ -55,7 +56,7 @@
 ~> In VS Code:
     After integrating it with git and github we see different color and letter labels in each file.
     these are:
-        • - (green/yellow/red) ➡ Changes detected inside that directory based on the color of the dot as mentioned below.
+        • - (green/yellow/red) ➡ Changes detected inside/on that directory based on the color of the dot as mentioned below.
         U - (Green) ➡ Untracked => Neither commited nor added to git repository.
         A - (Green) ➡ Added = > Newly added but not commited into git repository.
         M - (Yellow) ➡ Modified = > Already added (or/and commited maybe) to git repository but modified locally.

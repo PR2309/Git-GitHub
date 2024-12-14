@@ -99,8 +99,11 @@
     Without commit message we can't push out code into github repository via commands (using CLI).
     As mentioned above it's a bookmark comment by the user so it can we anythin inside "" in the command in place of "Commit message".
     This saves the all the tracked changed done yet into the index locally.
+    Use a -a to add the state changes to the index locally and commit it as well at the same time
     command:
         git commit -m "Commit message"
+        git commit -a -m "Commit message"
+
 
 ~> To check the status of all the files in the directory
     To check if they are tracked (added/ready to get commited) ot not.

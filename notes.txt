@@ -181,6 +181,7 @@
         git gc --prune=now
 
 ~> To remove Untracked files
+    Link: https://www.cloudbees.com/blog/git-remove-untracked-files
     It’s important to emphasize that untracked files do no harm; you could just leave them where they are.
     Removing them makes your working directory cleaner and more organized.
     Git clean is a somewhat lesser-known git command. You can use it to clean all untracked files at once.

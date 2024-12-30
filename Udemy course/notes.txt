@@ -140,6 +140,51 @@
         git push origin master
         git push origin main
 
+*~> To pull from remote repository:
+    This command is used to pull the changes from the remote repository to the local repository.
+    command:
+        git pull origin master
+        git pull origin main
+        git pull origin <branch-name>
+
+*~> To delete a remote branch:
+    command:
+        git push origin --delete <branch-name>
+
+*~> To delete a local branch:
+    command:
+        git branch -d <branch-name>
+
+*~> To delete a remote branch and local branch:
+    command:
+        git push origin --delete <branch-name>
+        git branch -d <branch-name>
+
+*~> To create a new branch:
+    command:
+        git branch <branch-name>
+
+*~> To switch to a new branch:
+    command:
+        git checkout <branch-name>
+
+*~> To merge a branch:
+    command:
+        git merge <branch-name>
+
+*~> To merge a branch with a specific commit:
+    command:
+        git merge <branch-name> --no-commit
+
+*~> To merge a branch with a specific commit and commit the changes:
+    command:
+        git merge <branch-name> --no-commit
+
+*~> To merge a branch with a specific commit and commit the changes with a specific commit message:
+    command:
+        git merge <branch-name> --no-commit
+
+
 *~> To get version history, commit ID & latest commit message:
     git log
 

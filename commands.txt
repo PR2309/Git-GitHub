@@ -1,0 +1,63 @@
+~> To initialize git git project:
+    git init
+
+~> To add files into git project:
+    git add <filename>                                  (Adds a particular file)
+    git add <filename1> <filename2> <filename3>         (Adds multiple files)
+    git add -A
+        OR git add --all                                (Adds all the files including hidden ones) [A for all] {.i.e, NO EXCEPTIONS}
+    git add -u                                          (Adds all modified and deleted files in the directory ignoring new files) [u for update] {.i.e, EXCEPT NEW FILES and HIDDEN FILES}
+    git add .                                           (For all files in the entire directory ignoring the deleted ones .i.e, doesn't removes anything) {.i.e, EXCEPT HIDDEN FILES and DELETED CHANGES}
+    git add *                                           (For all files in the directory excluding only files startinng with . in it's name (i.e., hidden files) in root directory but not in child ones wihtout removing anything) {i.e, EXCEPT HIDDEN FILES}
+    git add *.type                                      (For all files in the directory with a specific type .i.e, like a filter) {i.e, ONLY FILTERD FILES}
+
+~> To discard changes in working directory undoing the latest changes
+    git restore <file>
+
+~> To commit changes to git project:
+    git commit -m "Commit message"                         (To commit stated changes)
+    git commit -a -m "Commit message"                      (To add and commit changes together)
+
+~> To check git repository status:
+    git status
+
+~> To setup email of Github ID:
+    git config --global user.email "email@gmail.com"
+
+~> To setup user name of Github ID:
+    git config --global user.email "User Name"
+
+~> To connect to a remote repository:
+    git remote add origin <server>                      (Server is the link of repository with .git extension in the end)
+
+~> To send  to remote repository:
+    git push origin master
+
+
+
+
+~> To get version history, commit ID & latest commit message:
+    git log
+
+~> To add a tag  using commit ID:
+    git tag <tag> <commit ID> 
+
+~> To clean untracked files from repository:
+    git clean -f                (For all files)
+    git clean -n                (For Simulation Cleaning)
+    git clean -i                (For Interactive Cleaning)
+
+~> For file system checkup:
+    git fsck
+
+~> For fixing Dangling files:
+    git gc --prune=now
+
+~> In VS Code:
+    After integrating it with git and github we see different color and letter labels in each file.
+    these are:
+        • - (green/yellow/red) ➡ Changes detected inside/on that directory based on the color of the dot as mentioned below.
+        U - (Green) ➡ Untracked => Neither commited nor added to git repository.
+        A - (Green) ➡ Added = > Newly added but not commited into git repository.
+        M - (Yellow) ➡ Modified = > Already added (or/and commited maybe) to git repository but modified locally.
+        D - (Red) ➡ Deleted = > Already added (or/and commited maybe) to git repository but deleted locally.

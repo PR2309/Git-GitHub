@@ -1,0 +1,234 @@
+~> Documentry about Git basics:
+    https://medium.com/mindorks/what-is-git-commit-push-pull-log-aliases-fetch-config-clone-56bc52a3601c
+
+~> Setup Installation for git:
+    Apple: http://git-scm.com/download/mac
+    Windows: https://gitforwindows.org/
+    Linux: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
+~> Key Terms:
+    - Add:
+        To state changes, to add the modified files to the staging area, marking them as ready to be committed.
+    - Commit:
+        A commit is a snapshot of your project's state at a specific point in time, including the changes made to files and a descriptive message about what was changed. 
+    - Commit changes and Descriptive Commit messages:
+        to create a new commit with a message explaining what changes were made.
+    - Track state:
+        By creating a commit, you are essentially saving the current state of your project so you can revert back to it if needed or continue working on top of it. 
+    - Remote:
+        In Git, "remote" refers to a copy of your repository hosted on a server, like GitHub. 
+    - Branch:
+        A branch is a separate line of development within a repository, allowing you to work on different features without affecting the main codebase.
+    - Fetch:
+        When you fetch changes from the upstream, all new data from commits that were made since you last synced with the remote repository is downloaded into your local copy. This new data is not integrated into your local files, and changes are not applied to your code.
+        Fetched changes are stored as a remote branch, which gives you a chance to review them before you merge them with your files.
+    - Update:
+        Use update if you need to sync a specific branch with its remote tracked branch. This is a convenient shortcut for fetching and subsequently applying changes to the selected branch.
+    - Pulls:
+        If you need to get changes into the current branch from another branch instead of its remote tracked branch, use pull. When you pull, you not only download new data, but also integrate it into your local working copy of the project.
+        To pull changes from a remote branch:
+            git pull origin <branch-name>. 
+    - Rollback:
+        To reset the changes back to the previous commit.
+        To rollback to a previous commit:
+            git reset --hard <commit-hash>. 
+
+
+~> Brief Working (How to do it):
+    1. Make changes to your project files:
+        Edit the necessary files in your working directory. 
+    2. Stage changes:
+        Use git add to add the modified files to the staging area, marking them as ready to be committed. 
+    3. Commit changes:
+        Use git commit -m "Descriptive message" to create a new commit with a message explaining what changes were made. 
+    4. Push to remote branch:
+        Use git push origin <branch-name> to send your commit to the specified branch on the remote GitHub repository.
+        
+~> To create a new project directory (/ repository on github):
+    To initialize the project directory using git and github.
+    It converts the directory into a git project locally.
+    It creates a .git folder in the project directory which helps to synchronize the project and help in version control
+    To detach the project from it's github repository delete the .git folder.
+    Initially git doesn't know which files to add into the repository so it initializes an empty repository.
+    It only exists locally in offline device not on internet for now.
+    .git folder is a hidden directory and it might not be visible to the user, to make it visible  allow to show hiddlen files in folder properties.
+        To see hidden file also write the command:
+            ls -a   (all normal and hidden files)
+            ls -la  (all normal and hidden files listed)
+            ls -h   (all hidden files except . and ..)
+            "Ctrl+H" in windows GUI
+            "Command+Shift+Dot"  in Mac
+    .git folder is basically a local git server which gets connected to online git server present in the repository.
+    command:
+            git init
+
+~> It helps in version control to get the latest version
+~> It helps multiple people to works simultneously on same project easily using the repository and to track down their activities.
+~> It helps to track down the changes made in the project and to revert back to previous version when the project is updated and the new version is created.
+
+~> We can add files by using drag and drop via GUI band also with CLI
+    Initially git doesn't know which files to add into the repository so it initializes an empty repository.
+    So we have to tell it manually which files we want to add and keep a track of in git repository. 
+    The commands can add the particular file or all the fiiles in the directory into github repository.
+    This adds the file that to get ready to be uploaded on github repository.
+    But it's not saved yet.
+    These files have got indexed currently.
+    commands:
+        (For a particular file in the directory)
+                git add <filename>    
+        (For multiple files in the directory)
+                git add <filename1> <filename2>   
+        (For all  files in the directory including hidden ones) [A for all]
+                git add -A
+                git add --all
+        (For all modified and deleted files in the directory ignoring new files) [u for update]
+                git add -u
+        (For all files in the entire directory ignoring the deleted ones .i.e, doesn't removes anything)
+                git add .
+        (For all files in the directory excluding only files startinng with . in it's name (.i.e, hidden files) in root directory but not in child ones wihtout removing anything)
+                git add *
+        (For all files in the directory with a specific type)
+                git add *.type
+        
+*~> To discard changes in working directory undoing the latest changes
+    git restore <file>
+
+~> To save the changes we did we need to commit them.
+    This is where action takes place to those which were updated locally but not on github, and also those which were added and ready to be saved in github repository.
+    Commit message is like a bookmark comment for users to remember what was updated or anything else they want to remember.
+    Without commit message we can't push out code into github repository via commands (using CLI).
+    As mentioned above it's a bookmark comment by the user so it can we anythin inside "" in the command in place of "Commit message".
+    This saves the all the tracked changed done yet into the index locally.
+    Use a -a to add the state changes to the index locally and commit it as well at the same time
+    command:
+        git commit -m "Commit message"
+        git commit -a -m "Commit message"
+
+
+~> To check the status of all the files in the directory
+    To check if they are tracked (added/ready to get commited) ot not.
+    What is already tracked (commited already).
+    How many commits we have made in the directory.
+    Branch of the repository.
+    We were updated locally and then commit the
+    command:
+        git status
+
+~> Remote repository:
+    You can put your project online in a so called remote repository.
+    By doing this, multiple people can work on the same project.
+    There are several free services available for this including Github(https://github.com/), Gitlab(https://about.gitlab.com/) and Bitbucket(https://bitbucket.org/).
+    You may also choose to setup your own Git service using Gogs(https://gogs.io/).
+
+~> Git Server:
+    While working with git we use a git server.
+    It keeps track every version of the project repository, and do much more.
+    There are any git servers like GitHub, GitLab, Gitea, GitProtect, Bitbucket, Bitbuck, etc.
+    Github is most popular and commonly used one among these services.
+
+~> To connect to a remote repository:
+    Server is the link of repository with .git extension in the end.
+    Server is to link the repository's hidden .git folder with the locally hidden .git folder to sync them together.
+    command:
+        git remote add origin <server>
+
+~> To send to remote repository:
+    after this command it will ask for  username and then password of Github ID.
+    here password typing won't be visible to the user.
+    master and main are just types of branches.
+    commands:
+        git push origin master
+        git push origin main
+
+*~> To get version history, commit ID & latest commit message:
+    git log
+
+*~> To add a tag using commit ID:
+    Tags help us to label many things like versions.
+    It's so important in version control.
+    git tag <tag> <commit ID> 
+
+*~> For file system checkup:
+    Purpose
+        - Detect Corrupted Objects: Identifies corrupted blobs, commits, trees, or tags in your repository.
+        - Identify Broken Links: Reports dangling references (e.g., objects no longer connected to any branch or tag).
+        - Verify Integrity: Ensures that all objects and their relationships in the .git directory are intact.
+        - Help Debug Issues: Useful for troubleshooting issues like repository corruption or missing data.
+    When to Use
+        - After encountering errors like missing objects or lock files.
+        - To check repository health after a system crash or unexpected interruption during Git operations.
+        - If your repository behaves abnormally (e.g., commits not showing, missing files).
+    Outputs
+        - Healthy Repository:
+            Checking object directories: 100% (256/256), done.
+            Checking objects: 100% (1000/1000), done.
+        - Corruption Detected:
+            missing blob 9a2e56a8cd12bb8cd5af...
+            dangling commit 4b825dc642cb6eb9...
+    Fixing 
+        - Dangling Objects: Usually safe to ignore unless you need them (e.g., unreferenced commits). To clean them:
+            git gc --prune=now
+        -Corrupted Objects: You might need to restore from backups or fetch the missing data from a remote repository.
+    command:
+        git fsck
+
+*~> Fixing Dangling Objects:
+    git gc Stands for Git Garbage Collection.
+    It cleans up unnecessary files and optimizes the local repository.
+    Normally, Git keeps unreachable objects for a grace period (default: 2 weeks) before removing them.
+    The --prune=now option tells Git to remove all unreachable objects immediately, without waiting for the grace period.
+    command:
+        git gc --prune=now
+
+~> To remove Untracked files
+    Link: https://www.cloudbees.com/blog/git-remove-untracked-files
+    It’s important to emphasize that untracked files do no harm; you could just leave them where they are.
+    Removing them makes your working directory cleaner and more organized.
+    Git clean is a somewhat lesser-known git command. You can use it to clean all untracked files at once.
+        By using Command:
+            git clean -f
+        You’ll get a result like this:
+            Removing file.txt
+    When you use the -n parameter, git clean displays what would happen but doesn’t actively remove anything.
+    It's a simiulation cleaning of untracked files (a simulation not real).
+        By using Command:
+            git clean -n
+        The result is this:
+            Would remove file.txt
+    The -i parameter is for interactive. It displays a menu with options you can use for cleaning.
+    It's an Interactive cleaning.
+        By using Command:
+            git clean -i
+        It will display all the files and below that a commands menu asking how to remove files and ask for option number .i.e, 1/2/3/4/5/6.
+            Would remove the following items:
+                <file1.type1> <file2.type2>
+            *** Commands ***
+                1: clean
+                    (if we press 1 or c it removes all files)
+                2: filter by pattern
+                    (if we press 2 or f it filters a particular type of filename patterns, if we press 2 or f then add filter *.md, then i get all files not haveing.md in their names and we can decide what to do with them after it)
+                3: select by numbers
+                    (if we press 3 or s gives a labelled menu and for option number to delete that particular file)
+                    (to select multiple files enter s then comma seperated option numbers i.e, 1,2,etc)
+                4: ask for each
+                    (if we press 4 or a it asks [y/N]? for each file)
+                5: quit
+                    (if we press 5 or q git will display a message "Bye" wihtout harming files)
+                6: help
+                    (if we press h or 6 it displays a useful yet concise help screen)
+    However, if you want to remove them, you can use the following command:
+    command:
+    git rm --cached <filename>
+
+~> In VS Code:
+    After integrating it with git and github we see different color and letter labels in each file.
+    these are:
+        • - (green/yellow/red) ➡ Changes detected inside that directory based on the color of the dot as mentioned below.
+        U - (Green) ➡ Untracked => Neither commited nor added to git repository.
+        A - (Green) ➡ Added => Newly added but not commited into git repository.
+        M - (Yellow) ➡ Modified => Already added (or/and commited maybe) to git repository but modified locally.
+        D - (Red) ➡ Deleted => Already added (or/and commited maybe) to git repository but deleted locally.
+
+~> We can also see the branch name in the bottom left corner of the VS Code window
+
+

@@ -93,6 +93,9 @@
         (For all files in the directory with a specific type)
                 git add *.type
         
+~> To reset changes in working directory undoing the latest changes:
+    git resset  soft HEAD~1
+    
 *~> To discard changes in working directory undoing the latest changes
     git restore <file>
 

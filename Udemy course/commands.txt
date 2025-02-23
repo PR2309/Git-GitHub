@@ -21,6 +21,9 @@
     git commit -m "Commit message"                         (To commit stated changes)
     git commit -a -m "Commit message"                      (To add and commit changes together)
 
+~> to restore previous state:
+    git reset --soft HEAD~1
+
 ~> To check git repository status:
     git status
 
@@ -33,7 +36,7 @@
 ~> To connect to a remote repository:
     git remote add origin <server>                      (Server is the link of repository with .git extension in the end)
 
-~> To send  to remote repository:
+~> To send to remote repository:
     git push origin master
 
 ~> Cloning a repository for working on an existing Git project (i.e, a repository on github.com):

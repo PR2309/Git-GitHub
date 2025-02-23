@@ -21,6 +21,9 @@
     git commit -m "Commit message"                         (To commit stated changes)
     git commit -a -m "Commit message"                      (To add and commit changes together)
 
+~> to restore previous state:
+    git reset --soft HEAD~1
+
 ~> To check git repository status:
     git status
 

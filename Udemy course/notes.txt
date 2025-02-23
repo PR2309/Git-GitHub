@@ -6,6 +6,9 @@
     Windows: https://gitforwindows.org/
     Linux: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
+~> For a quick guide to git commands:
+    git
+
 ~> Key Terms:
     - Add:
         To state changes, to add the modified files to the staging area, marking them as ready to be committed.

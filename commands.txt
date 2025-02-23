@@ -33,11 +33,20 @@
 ~> To send  to remote repository:
     git push origin master
 
+~> Cloning a repository for working on an existing Git project (i.e, a repository on github.com):
+    git clone username@host:/path/to/repository.git
+    gh repo clone username@host:/path/of/repository     [for GitHub CLI only]
 
+~> Cloning a repository if it's on a Local network drive (i.e, in same device):
+    git clone /path/to/repository       (path can either be absolute or relative, even parents into child directory)
 
+~> Either keep offline git repositories in local machine or online on GitHub, GitLab, BitBucket, etc.
+    Or setup own git server onle using Gitea.
 
 ~> To get version history, commit ID & latest commit message:
     git log
+    CLick on commits in the repository      [for GUI GitHub]
+    link_of_project_repository/activity     [for GUI GitHub link access]
 
 ~> To add a tag  using commit ID:
     git tag <tag> <commit ID> 
@@ -61,3 +70,6 @@
         A - (Green) ➡ Added = > Newly added but not commited into git repository.
         M - (Yellow) ➡ Modified = > Already added (or/and commited maybe) to git repository but modified locally.
         D - (Red) ➡ Deleted = > Already added (or/and commited maybe) to git repository but deleted locally.
+
+~> For GitHub CLI commands:
+    https://cli.github.com/manual/gh

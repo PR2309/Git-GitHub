@@ -33,7 +33,7 @@
 ~> To connect to a remote repository:
     git remote add origin <server>                      (Server is the link of repository with .git extension in the end)
 
-~> To send to remote repository:
+~> To send  to remote repository:
     git push origin master
 
 ~> Cloning a repository for working on an existing Git project (i.e, a repository on github.com):

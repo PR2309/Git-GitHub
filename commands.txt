@@ -17,6 +17,9 @@
 ~> To discard changes in working directory undoing the latest changes
     git restore <file>
 
+~> To reverses the changes introduced by a specific commit without altering the history
+    git revert <commid ID>
+
 ~> To commit changes to git project:
     git commit -m "Commit message"                         (To commit stated changes)
     git commit -a -m "Commit message"                      (To add and commit changes together)
@@ -45,6 +48,10 @@
 
 ~> Cloning a repository if it's on a Local network drive (i.e, in same device):
     git clone /path/to/repository       (path can either be absolute or relative, even parents into child directory)
+
+*~> git rebase and git cherry-pick
+
+*~> git pull(commit history might not remain linear)  and git pull --rebase (to keep commit history linear)
 
 ~> Either keep offline git repositories in local machine or online on GitHub, GitLab, BitBucket, etc.
     Or setup own git server onle using Gitea.

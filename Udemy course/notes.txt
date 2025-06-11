@@ -98,6 +98,24 @@
     
 *~> To discard changes in working directory undoing the latest changes
     git restore <file>
+    git restore (Local Changes):
+    Purpose:
+	Restores files in the working directory to their last committed state, effectively undoing local changes.
+	Usage:
+	git restore <file>: Restores a specific file.
+	git restore .: Restores all files in the current directory to their last committed state.
+	Example:
+	If you've made local changes to my_file.txt, you can revert them using git restore my_file.txt.
+
+*~> git revert (Shared Repository Changes):
+	Purpose:
+		Creates a new commit that reverses the changes introduced by a specific commit, allowing you to undo changes in a shared repository without altering the history.
+	Usage: 
+		git revert <commit_hash>.
+	Example:
+		To undo the changes introduced by commit a1b2c3d, you would use git revert a1b2c3d.
+	Important:
+		git revert creates a new commit, preserving the original history. 
 
 ~> To save the changes we did we need to commit them.
     This is where action takes place to those which were updated locally but not on github, and also those which were added and ready to be saved in github repository.
@@ -109,7 +127,6 @@
     command:
         git commit -m "Commit message"
         git commit -a -m "Commit message"
-
 
 ~> To check the status of all the files in the directory
     To check if they are tracked (added/ready to get commited) ot not.
@@ -210,10 +227,34 @@
 
 *~> To pull from remote repository:
     This command is used to pull the changes from the remote repository to the local repository.
+    Just using pull might create a non-linear commit history.
+    Example:
+    Step 1: (1) is Initial commit and (2a) and (2b) are different commits by different people after (1).
+    Step 2: (2a) commited first but in someones local server it wasn'tt synced and then thatperson commites (2b) afterward. 
+        (2a)    (2b)
+         |       |
+        (1)     (1)
+    Step 3: It'll merge to for a new different commit (2x) if b user usies git pull, making the commit history complex and non-linear with time and as users increase.
+       (2x)
+      /   |
+    (2a) (2b)
+      \   |
+        (1)
+    Step 4: Using git pull --rebase
+            It adds the remote commits as base and then adds user commits(which are not on remote server) after wards.
+        (2b)
+          |
+        (2a)
+          |
+         (1)
+    Step 5: but if changes in (2a) and (2b) are different it will show a merge conflict, and git will tell it.
+    Step 6: In case of merge conflict, git rebase --abort, to undo it (as it was before using git pull --rebase) and then use regular git pull and solve it manually.
     command:
         git pull origin master
         git pull origin main
         git pull origin <branch-name>
+        git pull origin <branch-name> --rebase
+        git rebase --abort
 
 *~> To delete a remote branch:
     command:
@@ -239,6 +280,7 @@
 *~> To switch to a new branch:
     command:
         git checkout <branch-name>
+        git checkout -b <branch-name> (works more accurately)
         git switch <branch-name>
 
 *~> To merge a branch:

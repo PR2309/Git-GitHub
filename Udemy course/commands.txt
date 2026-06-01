@@ -11,7 +11,7 @@
         OR git add --all                                (Adds all the files including hidden ones) [A for all] {.i.e, NO EXCEPTIONS}
     git add -u                                          (Adds all modified and deleted files in the directory ignoring new files) [u for update] {.i.e, EXCEPT NEW FILES and HIDDEN FILES}
     git add .                                           (For all files in the entire directory ignoring the deleted ones .i.e, doesn't removes anything) {.i.e, EXCEPT HIDDEN FILES and DELETED CHANGES}
-    git add *                                           (For all files in the directory excluding only files startinng with . in it's name (i.e., hidden files) in root directory but not in child ones wihtout removing anything) {i.e, EXCEPT HIDDEN FILES}
+    git add *                                           (For all files in the directory excluding only files starting with . in it's name (i.e., hidden files) in root directory but not in child ones without removing anything) {i.e, EXCEPT HIDDEN FILES}
     git add *.type                                      (For all files in the directory with a specific type .i.e, like a filter) {i.e, ONLY FILTERD FILES}
 
 ~> To discard changes in working directory undoing the latest changes
@@ -24,11 +24,39 @@
     git commit -m "Commit message"                         (To commit stated changes)
     git commit -a -m "Commit message"                      (To add and commit changes together)
 
-~> to restore previous state:
+~> To get origin:
+	git remote get-url origin
+
+~> To get remote:
+	git remote -v
+
+~> To create and switch to a new branch?
+	git checkout -b new-branch
+
+~> To rename branch to main:
+	git branch -M main
+
+~> To check branch name:
+	 git branch
+
+~> to restore previous state (with no changes done):
     git reset --soft HEAD~1
+
+~> to restore a particular state (with changes done):
+    git reset --soft "commitID"
+
+~> to move back to previous state (with no changes done):
+    git reset --hard HEAD~1
+
+~> to move back to a particular state (with no changes done):
+    git reset --hard "commitID"
 
 ~> To check git repository status:
     git status
+
+~> Stash Changes
+	git stash
+	git stash apply
 
 ~> To setup email of Github ID:
     git config --global user.email "email@gmail.com"
@@ -41,6 +69,7 @@
 
 ~> To send to remote repository:
     git push origin master
+    git push -u origin master
 
 ~> Cloning a repository for working on an existing Git project (i.e, a repository on github.com):
     git clone username@host:/path/to/repository.git
@@ -54,7 +83,7 @@
 *~> git pull(commit history might not remain linear)  and git pull --rebase (to keep commit history linear)
 
 ~> Either keep offline git repositories in local machine or online on GitHub, GitLab, BitBucket, etc.
-    Or setup own git server onle using Gitea.
+    Or setup own git server only using Gitea.
 
 ~> To get version history, commit ID & latest commit message:
     git log

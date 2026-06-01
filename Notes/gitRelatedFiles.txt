@@ -1,0 +1,96 @@
+~> .gitignore
+    - Specifies files and folders Git should ignore.
+    - Example:
+        node_modules/
+        *.log
+
+~> .gitattributes
+    - Defines how Git handles specific files.
+    - Used for Git LFS, line endings, merge strategies, diff behavior, etc.
+    - Example:
+        *.txt text
+        *.mp4 filter=lfs diff=lfs merge=lfs -text
+
+~> .git
+    - Hidden directory created by Git.
+    - Contains the complete repository metadata, commits, branches, tags, and configuration.
+    - Never delete it unless you want to remove Git tracking.
+
+~> .git/config
+    - Repository-specific configuration.
+    - Example:
+        [remote "origin"]
+            url = https://github.com/user/repo.git
+
+~> .gitmodules
+    - Created when using Git Submodules.
+    - Stores information about linked repositories.
+    - Example:
+        [submodule "library"]
+            path = library
+            url = https://github.com/user/library.git
+
+~> .gitkeep
+    - Not an official Git file.
+    - Convention used to force Git to track empty directories.
+    - Git does not track empty folders by default.
+
+~> .gitmessage
+    - Stores a commit message template.
+    - Can be configured globally.
+    - Example:
+        Summary:
+        Description:
+
+~> .mailmap
+    - Maps multiple author names/emails to a single identity.
+    - Useful for contributor statistics.
+    - Example:
+        John Doe <john@company.com> <john@gmail.com>
+
+~> .git-blame-ignore-revs
+    - Lists commit hashes that git blame should ignore.
+    - Commonly used for formatting-only commits.
+    - Example:
+        abc123def456
+        xyz789abc123
+
+~> .editorconfig
+    - Not Git-specific but commonly used with Git projects.
+    - Defines coding style rules across editors.
+    - Example:
+        indent_style = space
+        indent_size = 4
+
+~> README.md
+    - Project documentation.
+    - Usually shown automatically on GitHub.
+
+~> LICENSE
+    - Defines the legal license of the project.
+    - Examples:
+        MIT
+        Apache 2.0
+        GPL
+
+~> CODEOWNERS
+    - Used by GitHub.
+    - Defines who reviews changes for specific files.
+    - Example:
+        *.js @frontend-team
+
+~> CONTRIBUTING.md
+    - Instructions for contributors.
+
+~> SECURITY.md
+    - Security policy and vulnerability reporting instructions.
+
+~> .github/
+    - GitHub-specific configuration folder.
+    Common files:
+        .github/workflows/
+            GitHub Actions CI/CD
+        .github/ISSUE_TEMPLATE/
+            Issue templates
+        .github/PULL_REQUEST_TEMPLATE.md
+            Pull request template

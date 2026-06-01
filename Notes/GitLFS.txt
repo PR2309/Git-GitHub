@@ -1,0 +1,129 @@
+~> Git LFS (Large File Storage)
+    - Git LFS is an extension for Git used to manage large files efficiently.
+    - Instead of storing large files directly in the Git repository, Git stores small pointer files and keeps the actual files on a separate LFS server.
+    - Commonly used for videos, datasets, audio files, game assets, machine learning models, and large binaries.
+
+~> Why Git LFS?
+    - Reduces repository size.
+    - Speeds up cloning and fetching.
+    - Prevents Git from becoming slow due to large files.
+    - Downloads large files only when needed.
+
+~> How Git LFS Works
+    1. Git LFS replaces large files with small text pointers in Git.
+    2. The actual files are uploaded to the LFS server.
+    3. When cloning or pulling, Git downloads the real files through Git LFS.
+
+~> Installation
+    Windows:
+        Download and install Git LFS from:
+        https://git-lfs.com
+    Verify Installation:
+        git lfs version
+
+~> Initialize Git LFS
+    Run once per system:
+        git lfs install
+
+~> Track a File Type
+    Example:
+        git lfs track "*.mp4"
+    This tells Git LFS to manage all MP4 files.
+
+~> Track Multiple Types
+    Example:
+        git lfs track "*.zip"
+        git lfs track "*.psd"
+        git lfs track "*.exe"
+
+~> Track a Specific File
+    Example:
+        git lfs track "dataset.csv"
+
+~> .gitattributes
+    - Git LFS automatically creates/updates a .gitattributes file.
+    - This file stores LFS tracking rules.
+    Example:
+        *.mp4 filter=lfs diff=lfs merge=lfs -text
+
+~> Add Files to Git LFS
+    Example:
+        git add .gitattributes
+        git add video.mp4
+        git commit -m "Add video using LFS"
+
+~> Push Files
+    Example:
+        git push origin main
+    - Git uploads pointer files to Git.
+    - Actual files are uploaded to the LFS server.
+
+~> Check Tracked Files
+    Example:
+        git lfs ls-files
+
+~> View Tracking Rules
+    Example:
+        git lfs track
+
+~> Stop Tracking a File Type
+    Example:
+        git lfs untrack "*.mp4"
+
+~> Download LFS Files
+    Example:
+        git lfs pull
+
+~> Fetch LFS Files
+    Example:
+        git lfs fetch
+
+~> Clone Repository with LFS
+    Example:
+        git clone <repository-url>
+    Git LFS automatically downloads the actual files.
+
+~> Common Commands
+    Install:
+        git lfs install
+    Track:
+        git lfs track "*.zip"
+    List Tracked Files:
+        git lfs ls-files
+    Pull Files:
+        git lfs pull
+    Fetch Files:
+        git lfs fetch
+    Untrack:
+        git lfs untrack "*.zip"
+
+~> Difference Between Git and Git LFS
+    ┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃ Feature      ┃ Git                   ┃ Git LFS              ┃
+    ┣━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━┫
+    ┃ Storage      ┃ Stores full file      ┃ Stores pointer file  ┃
+    ┃ Large Files  ┃ Slow                  ┃ Optimized            ┃
+    ┃ Repo Size    ┃ Grows quickly         ┃ Smaller              ┃
+    ┃ Clone Speed  ┃ Slower                ┃ Faster               ┃
+    ┃ Best For     ┃ Source code           ┃ Large binary files   ┃
+    ┗━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━┛
+
+~> Common File Types for Git LFS
+    *.mp4
+    *.mov
+    *.zip
+    *.rar
+    *.exe
+    *.iso
+    *.psd
+    *.blend
+    *.fbx
+    *.pt
+    *.h5
+    *.onnx
+
+~> Important Notes
+    - Git LFS is NOT included in standard Git and must be installed separately.
+    - Track files before committing them whenever possible.
+    - .gitattributes should be committed to the repository.
+    - Git LFS is useful only for large files; normal source code should remain in Git.

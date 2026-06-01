@@ -1,10 +1,28 @@
 ~> Documentry about Git basics:
     https://medium.com/mindorks/what-is-git-commit-push-pull-log-aliases-fetch-config-clone-56bc52a3601c
 
-~> Setup Installation for git:
+~> Setup Installation for git
+    (GUI):
     Apple: http://git-scm.com/download/mac
     Windows: https://gitforwindows.org/
     Linux: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
+    (CLI):
+    Windows Command:
+        winget install --id Git.Git -e --source winget
+    Linux (Debian/Ubuntu) Command:
+        sudo apt update
+        sudo apt install git
+    Linux (RedHat/CentOS/Fedora) Command:
+        sudo dnf install git     # For Fedora
+        sudo yum install git     # For older RedHat/CentOS
+    macOS (Using Homebrew) Command:
+        brew install git
+    Xcode CLI tools (already includes Git) Command:
+        xcode-select --install
+
+    Verify by checking the version:
+        git --version 
 
 ~> For a quick guide to git commands:
     git
@@ -64,10 +82,35 @@
     .git folder is basically a local git server which gets connected to online git server present in the repository.
     command:
             git init
-
 ~> It helps in version control to get the latest version
 ~> It helps multiple people to works simultneously on same project easily using the repository and to track down their activities.
 ~> It helps to track down the changes made in the project and to revert back to previous version when the project is updated and the new version is created.
+
+# Working 
+~> Git is just a Distributed Version Control System(Locally), and a tool (if used with online servers like GitHub)
+~> Using a VCS also generally means that if you screw things up or lose files, you can easily recover
+~> One of the most popular VCS tools was a system called RCS, it works by keeping patch sets (that is, the differences between files) in a special format on disk; it can then re-create what any file looked like at any point in time by adding up all the patches.
+~> The new major issue was, need to collaborate with developers on other systems. Which lead to Centralized Version Control Systems (CVCSs).
+~> These systems (such as CVS, Subversion, and Perforce) have a single server that contains all the versioned files, and a number of clients that check out files from that central place.
+~> Important Ponits of CVCSs:
+    - Everyone knows to a certain degree what everyone else on the project is doing.
+    - Administrators have fine-grained control over who can do what.
+    - It’s far easier to administer a CVCS than it is to deal with local databases on every client.
+    - If centralized server goes down for an hour, then during that hour nobody can use it's features (Similar with Local VCSs).
+~> Then we got rid of the issue of not having a back up and loosing all versions at once by using  Distributed Version Control Systems (DVCSs), such as Git, Mercurial or Darcs.
+~> The Solution:
+    - Here clients don’t just check out the latest snapshot of the files; rather, they fully mirror the repository, including its full history.
+    - Thus, if any server dies, and these systems were collaborating via that server, any of the client repositories can be copied back up to the server to restore it.
+    - Every clone is really a full backup of all the data.
+~> Initially there was asoftware BitKeeper to be used with Linux.
+~> Enhanced and rebuilt in 2005 Git was created.
+~> It was created by Linux development Community and in particular Linus Torvalds, the creator of Linux.
+~> New Features compared to BitKeeper:
+    - Speed (Faster)
+    - Simple Design (Good UI/UX)
+    - Strong support for non-linear development (thousands of parallel branches)
+    - Fully Distributed
+    - Able to handle large projects like the Linux kernel efficiently (speed and data size)
 
 ~> We can add files by using drag and drop via GUI band also with CLI
     Initially git doesn't know which files to add into the repository so it initializes an empty repository.
@@ -92,9 +135,12 @@
                 git add *
         (For all files in the directory with a specific type)
                 git add *.type
-        
+	(For excluding a specific file in the directory)
+        	git add . ':!filename.type'
+		git add .; git reset "filename.type"
+
 ~> To reset changes in working directory undoing the latest changes:
-    git resset  soft HEAD~1
+    git resset soft HEAD~1
     
 *~> To discard changes in working directory undoing the latest changes
     git restore <file>
@@ -194,6 +240,18 @@
     command:
         git log
 
+~> Staging Area in Git:
+	The staging area (also called the index) is where you place changes that you want to include in the next commit.
+	It’s like a buffer between your working directory (where you edit files) and the repository history.
+	Files are added to the staging area with git add, then commit them with git commit.
+
+~> Stash Changes
+	Temporarily save uncommitted changes without committing.
+	Temporarily saves changes and cleans working directory.
+	Later, apply to bring them back.
+		git stash
+		git stash apply
+
 ~> Tracking IDs:
     A commit ID identifies a specific change made in a repository.
     A pull request ID (or issue ID) tracks the progress and changes related to a specific feature, bug fix, or task.
@@ -214,7 +272,7 @@
     Commit IDs are to keep track of commits done by user.
     Pull request IDs are to keep track of pull requests available for users. 
 
-*~> Undoing un-pushed commits:
+~> Undoing un-pushed commits:
     Sometimes people make mistakes and commit the code, but didn't push it to the online git repository.
     We can undo commits done on local repository only.
     If mistakes are already pushed on online in the remote git repository, we can use roll back, but all changes in will be lost.
@@ -224,6 +282,21 @@
         git commit -m 'Initial commit'
         git add forgotten_file
         git commit --amend
+
+    If we want to change the commit message:
+    Use the arrow keys to move to the message line (above the lines starting with #)
+        Edit the message as desired
+    Then:
+        Press -> Esc (not needed always)
+        Type -> :wq
+        Press-> Enter
+    Our latest commit is now replaced with this new one.
+    Since we've rewritten history:
+        git push --force
+    Use --force (or better, --force-with-lease) only if you're sure it's safe and you're not overwriting others' work.
+    If we want to undo amend in middle
+    Type-> :qa or :qa!
+    These :commands are used in Vim editor. 
 
 *~> To pull from remote repository:
     This command is used to pull the changes from the remote repository to the local repository.
@@ -376,6 +449,78 @@
     command:
     git rm --cached <filename>
 
+~> Vim Editor Commands:
+    Vim is not part of Git, but it is often used with Git — especially when Git needs a text editor.
+    We can use Nano, VS Code, Notepad, etc. instead if needed.
+    Similarly working like Scanner class for input in java and we also have BufferReader and other input classes.
+    But both are independent and not binded together.
+    Git is the engine and decision-maker. Vim is just a tool Git sometimes uses to get your input (like a commit message).
+    Diagram:
+                  +----------------------+
+                  |      You (User)      |
+                  +----------------------+
+                            |
+                            v
+                  +----------------------+
+                  |        Git           |   ← (Like Java class/program)
+                  +----------------------+
+                            |
+               Needs Input (e.g. commit message)
+                            |
+                            v
+                  +----------------------+
+                  |       Vim            |   ← (Like Scanner in Java)
+                  | (Text editor input)  |
+                  +----------------------+
+                            |
+           You type message in Vim (:wq to save)
+                            |
+                            v
+                  +----------------------+
+                  |   Git continues      |
+                  | with commit, rebase, |
+                  | or config etc.       |
+                  +----------------------+
+
+    File/Buffer Commands
+        :w	Save the current file (write)
+        :wa	Save all open files (write all)
+        :w newname.txt	Save the file as newname.txt
+        :q	Quit (close Vim)
+        :q!	Quit without saving (force quit)
+        :qa	Quit all files (if multiple open)
+        :qa!	Quit all without saving anything
+        :wq	Save and quit
+        :wqa	Save all and quit all
+        :x	Same as :wq (save and quit)
+    Navigation & Line Commands
+        :n	Go to line number n (e.g., :42 goes to line 42)
+        :$	Go to the last line
+        :0 or :1	Go to the first line
+        :set number	Show line numbers
+        :set nonumber	Hide line numbers
+    Search & Replace
+        :/text	Search forward for text
+        :?text	Search backward for text
+        :s/foo/bar/	Replace first foo with bar on the current line
+        :s/foo/bar/g	Replace all foo with bar on the current line
+        :%s/foo/bar/g	Replace all foo with bar in the entire file
+        :%s/foo/bar/gc	Same as above, but asks for confirmation
+    Editing
+        :e filename	Open or edit another file
+        :r filename	Read (insert) contents of filename into current file
+        :!command	Run a shell command (e.g., :!ls)
+        :undo or u	Undo last change (can use u in normal mode too)
+        :redo or Ctrl + r	Redo undone change
+    Buffer and Tab Management
+        :ls or :buffers	List open buffers
+        :bN (e.g., :b2)	Switch to buffer N
+        :tabnew filename	Open file in a new tab
+        :tabn / :tabp	Move to next/previous tab
+    Tips
+        Press Esc first before typing : to enter command mode.
+        You can auto-complete file names in :e or :w by pressing Tab.
+
 ~> In VS Code:
     After integrating it with git and github we see different color and letter labels in each file.
     these are:
@@ -389,3 +534,19 @@
 
 ~> For GitHub CLI commands:
     https://cli.github.com/manual/gh
+
+
+
+
+
+
+
+
+_________________________PEP______________________________________________________________________________________________________
+
+> git config --global user.name "PR2309"
+> > git config --global user.email "piyushanand2309@gmail.com"
+
+
+if i have a folder named usrname.github.io and i publish it on github  it'll be live on gh pages automatically but only once.
+it remains the front landing page of github.

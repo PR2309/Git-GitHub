@@ -1,0 +1,537 @@
+~> Working and Steps:
+    1> Go to Actions Tab
+        Open the GitHub repository.
+        Go to the Actions tab.
+    2> Search for Workflow type
+        GitHub provides workflow templates for different technologies and use cases.
+        For example:
+            Java with Maven
+            Node.js
+            Python
+            Docker
+            Deployments, etc.
+    3> Configure it
+        Select a suitable template or create a workflow manually.
+        Configure:
+            Workflow name
+            Trigger events
+            Branches
+            Jobs
+            Runner/machine
+            Steps/commands
+            Secrets and environment variables, if required
+    4> Write Code for YAML file
+        GitHub Actions workflows are written in YAML.
+        The workflow file is stored inside:
+            ./.github/workflows/YAMLFileName.yml
+        FileName can be anything having .yml or .yaml extension at the end.
+        Example:
+            .github/
+                └── workflows/
+                        └── sonar.yml
+    5> Commit Changes
+        It'll do the manual tasks described in it automatically,
+            when ever defined event occures
+        Once the YAML file is committed and pushed to the repository,
+            GitHub Actions will execute the workflow whenever one of the configured trigger events occurs.
+        The workflow does not necessarily run only once after committing.
+            It runs whenever an event matching the on: configuration occurs.
+
+~> Code Writing for YAML File:
+    1> Comments:
+        We use # for writting comments in YAML
+        Comments are ignored during execution and can be written anywhere to explain the purpose or use of the code.
+        Syntax:
+            # This is a YAML File Commment
+        Example:
+            # This workflow builds and tests the Java project
+            name: Java CI
+    2> We give name of the workflow:
+        We define the name of the workflow using the name property.
+        This name is displayed in the GitHub Actions interface.
+        Syntax:
+            name: CI CD Workflow File name
+        Example:
+            name: Java CI with Maven + SonarQube
+    3> We define on what evets this workflow should be triggered:
+        The on section defines when the workflow should be triggered.
+        Here we also define to apply workflow on which branches
+        We can configure different GitHub events such as:
+            push, pull_request, workflow_dispatch, schedule, and many others
+        We can also specify which branches should trigger the workflow.
+        Syntax:
+            on:
+                # Whenever code is pushed to the main branch
+                push:
+                    branches: [ "main" ]
+                # Whenever a pull request is is created/updated for these branches
+                pull_request:
+                    branches: [ "main", "master", "test" ]
+        Important
+            push means the workflow is triggered when commits are pushed.
+            pull_request means the workflow is triggered by configured pull-request activity.
+    4> We define the jobs and their steps to be performed:
+        Here we define jobs,
+        which machine it should use to do the jobs
+        steps need to be performed to execute the job
+        The jobs section defines the tasks that GitHub Actions needs to perform.
+        For each job, we generally define:
+            Job name/ID
+            Runner/machine on which the job executes
+            Steps that need to be performed
+        Syntax:
+            jobs:
+                # job Name/ID
+                build-and-sonar:
+                    # GitHub provides a temporary Ubuntu machine for this job
+                    # Machine on which the job will run
+                    # runs-on: self-hosted  #To run on loacl device, setup required
+                    runs-on: ubuntu-latest  #Recommemded
+                    # Steps that need to be performed
+                    steps:
+                        # Rest of the Code...
+        runs-on:
+            runs-on specifies the machine/runner on which the job will execute.
+            GitHub provides a temporary hosted runner for the job.
+            We can also use a self-hosted runner:
+            A self-hosted runner requires us to configure and maintain our own machine/runner.
+            Example:
+                runs-on: ubuntu-latest
+                runs-on: self-hosted
+    - Defining Steps:
+        Inside a job, we define individual steps.
+        Here we define step name,
+            the command it needs to run
+            the resources it need to use
+            the confguration it need to setup
+        A step can:
+            Run a shell command
+            Run multiple shell commands
+            Use an existing GitHub Action
+            Configure a tool/environment
+            Checkout source code
+            Install/configure Java
+            Build and test the application
+            Upload/download artifacts
+            Perform code analysis
+            Perform deployment
+            Update the dependency graph
+        Steps Performed Here:
+            Step 1: we can run commands
+                Syntax:
+                    steps:
+                        # Step name
+                        - name: Run Command
+                            run: command
+                Example:
+                    - name: Build Project
+                    run: mvn clean package
+            Step 2: we can run multiple commands
+                We can use | to execute multiple lines of commands.
+                Syntax
+                    - name: Run Multiple Commands
+                    run: |
+                        command1
+                        command2
+                        command3
+                Example:
+                    - name: Build and Test
+                    run: |
+                        mvn clean
+                        mvn test
+                        mvn package
+            Step 3: Using Existing GitHub Actions
+                Instead of writing every operation ourselves, we can use existing Actions.
+                The uses keyword specifies an Action to execute.
+                This downloads/checks out the repository source code into the runner.
+                Example:
+                    - name: Checkout source code
+                    uses: actions/checkout@v4
+            Step 4: Checkout Source Code
+                Before performing operations on the project, we generally need to make the repository's source code available on the runner.
+                Code:
+                    - name: Checkout source code
+                    uses: actions/checkout@v4
+                    with:
+                        # Fetch complete Git history
+                        fetch-depth: 0
+                fetch-depth: 0
+                    This fetches the complete Git history.
+                This can be important for tools such as SonarQube/SonarCloud that use Git history while performing analysis.
+            Step 5: Setting Up Environment (Java 21 Here)
+                For a Java/Maven project, we can use actions/setup-java.
+                Code:
+                    - name: Set up Java 21
+                    uses: actions/setup-java@v4
+                    with:
+                        distribution: temurin
+                        java-version: '21'
+                        cache: maven
+                Explanation
+                    distribution: temurin
+                        Uses the Eclipse Temurin JDK distribution.
+                    java-version: '21'
+                        Configures Java 21.
+                    cache: maven
+                        Enables caching of Maven dependencies to make subsequent workflow runs faster.
+            Step 6: Building and Testing the Project
+                For a Maven project:
+                    - name: Build and run tests
+                    run: mvn clean verify
+                This can:
+                    Clean previous build output
+                    Compile the project
+                    Run tests
+                    Execute the configured Maven verification lifecycle
+                    Generate configured reports, such as JaCoCo coverage reports
+                The exact tasks performed depend on the project's pom.xml configuration.
+            Step 7: we can define Update dependancy graph (Optional)
+                GitHub provides an action that can submit the project's dependency information.
+                Example:
+                    - name: Update dependency graph
+                    uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+                Purpose
+                    This can upload the project's dependency graph to GitHub.
+                    It can help GitHub provide better dependency/security information, including Dependabot-related alerts.
+                This step is optional.
+        Complete Code:
+            steps:
+                #name of the step
+                - name: RunCommand
+                # runs the particular given command
+                run: command
+                
+                - name:RunCommand2
+                # runs the 2nd given command
+                run : | command2
+
+                # Download the repository code into the Ubuntu runner
+                - name: Checkout source code
+                uses: actions/checkout@v4
+                with:
+                    # Required for SonarQube to properly analyze Git history
+                    fetch-depth: 0
+                
+                # Install/configure Java 21
+                - name: Set up Java 21
+                uses: actions/setup-java@v4
+                with:
+                    distribution: temurin
+                    java-version: '21'
+                    # Cache Maven dependencies to make future builds faster
+                    cache: maven
+
+                # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+                - name: Update dependency graph
+                uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+~> GitHub Actions Secrets:
+    GitHub Actions provides Secrets to securely store sensitive information.
+    We should not write sensitive values directly inside the workflow YAML file.
+    Examples:
+        Access tokens
+        API keys
+        Passwords
+        Private keys
+        SonarQube tokens
+        Cloud credentials
+    To create:
+        Go to Project Repository Settings >
+            (on th eSide Bar) Secrets and Variables >
+                Actions >
+                    Create New >
+                        Enter Secret name
+                        Enter secret Value
+                        Save the secret
+    Important:
+        Once the secret is created we can't see the value,
+            Although we can update it
+    Usage:
+        Use Secrets in YAML Files
+        If the secret is named:
+            SONAR_TOKEN
+        Syntax:
+            ${{ secrets.SECRET_NAME }}
+    Needed for:
+        To store confidental information,
+            and use them in YAML Files
+        Like Access TOKEN, API KEYS, etc.
+        It's used to avoid writing SECRET KEYS directly in the code. 
+
+~> Example Code:
+    # Sonar.yml File
+    # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+    # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+    # This workflow uses actions that are not certified by GitHub.
+    # They are provided by a third-party and are governed by
+    # separate terms of service, privacy policy, and support
+    # documentation.
+
+    # GitHub Actions workflow for:
+    # 1. Building the Maven Java project
+    # 2. Running JUnit tests
+    # 3. Generating JaCoCo code coverage
+    # 4. Sending the analysis to SonarQube Cloud
+    name: Java CI with Maven + SonarQube
+
+    # Run the workflow when:
+    # - Code is pushed to the main branch
+    # - A pull request is created/updated for the main branch
+    on:
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+
+    # jobs:
+    #   build:
+
+    #     runs-on: ubuntu-latest
+
+    #     steps:
+    #     - uses: actions/checkout@v4
+    #     - name: Set up JDK 17
+    #       uses: actions/setup-java@v4
+    #       with:
+    #         java-version: '17'
+    #         distribution: 'temurin'
+    #         cache: maven
+    #     - name: Build with Maven
+    #       run: mvn -B package --file pom.xml
+
+    #     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+    #     - name: Update dependency graph
+    #       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+    jobs:
+    build-and-sonar:
+        # GitHub provides a temporary Ubuntu machine for this job
+        # runs-on: self-hosted
+        runs-on: ubuntu-latest
+
+        steps:
+        # Download the repository code into the Ubuntu runner
+        - name: Checkout source code
+            uses: actions/checkout@v4
+            with:
+            # Required for SonarQube to properly analyze Git history
+            fetch-depth: 0
+
+        # Install/configure Java 21
+        - name: Set up Java 21
+            uses: actions/setup-java@v4
+            with:
+            distribution: temurin
+            java-version: '21'
+            # Cache Maven dependencies to make future builds faster
+            cache: maven
+
+        # Build the project, run JUnit tests, and generate the JaCoCo coverage report
+        - name: Build and run tests
+            run: mvn clean verify
+
+        # Run SonarQube Cloud analysis
+        #
+        # The SONAR_TOKEN is stored securely in:
+        # GitHub → Settings → Secrets and variables → Actions
+        #
+        # Secret name:
+        # SONAR_TOKEN
+        - name: SonarQube Cloud analysis
+            run: |
+            mvn sonar:sonar \
+                -Dsonar.organization=pr2309 \
+                -Dsonar.projectKey=PR2309_Calulator_JavaMavenEclipseProject \
+                -Dsonar.projectName=CalculatorProject \
+                -Dsonar.host.url=https://sonarcloud.io \
+                -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+                -X
+                
+    #          mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+    #            -Dsonar.projectKey=CalculatorProject \
+    #            -Dsonar.projectName=CalculatorProject \
+    #            -Dsonar.host.url=http://localhost:9000 \
+    #            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+    #            -X
+
+
+
+=====================================================================================
+
+~> Complete Example — SonarQube Workflow
+    The following workflow:
+        1. Runs when code is pushed to main
+        2. Runs when a pull request targets main
+        3. Creates an Ubuntu runner
+        4. Checks out the source code
+        5. Sets up Java 21
+        6. Builds the Maven project
+        7. Runs tests
+        8.Generates configured JaCoCo coverage
+        9. Runs SonarQube Cloud analysis
+        10. Uses SONAR_TOKEN from GitHub Actions Secrets
+    Code:
+        # Sonar.yml
+
+        # GitHub Actions workflow for:
+        # 1. Building the Maven Java project
+        # 2. Running JUnit tests
+        # 3. Generating JaCoCo code coverage
+        # 4. Sending analysis to SonarQube Cloud
+
+        name: Java CI with Maven + SonarQube
+
+        # Run the workflow when:
+        # - Code is pushed to the main branch
+        # - A pull request is created/updated for the main branch
+        on:
+        push:
+            branches: ["main"]
+
+        pull_request:
+            branches: ["main"]
+
+        jobs:
+
+        # Job ID
+        build-and-sonar:
+
+            # GitHub provides a temporary Ubuntu runner
+            # For a self-hosted runner:
+            # runs-on: self-hosted
+            runs-on: ubuntu-latest
+
+            steps:
+
+            # Download/check out the repository code
+            - name: Checkout source code
+                uses: actions/checkout@v4
+                with:
+                # Fetch complete Git history.
+                # Useful for SonarQube analysis.
+                fetch-depth: 0
+
+            # Install/configure Java 21
+            - name: Set up Java 21
+                uses: actions/setup-java@v4
+                with:
+                distribution: temurin
+                java-version: '21'
+
+                # Cache Maven dependencies
+                cache: maven
+
+            # Build the project, run tests,
+            # and generate configured verification reports
+            - name: Build and run tests
+                run: mvn clean verify
+
+            # Optional:
+            # Upload the Maven dependency graph to GitHub
+            - name: Update dependency graph
+                uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+            # Run SonarQube Cloud analysis
+            - name: SonarQube Cloud analysis
+                run: |
+                mvn sonar:sonar \
+                    -Dsonar.organization=pr2309 \
+                    -Dsonar.projectKey=PR2309_Calulator_JavaMavenEclipseProject \
+                    -Dsonar.projectName=CalculatorProject \
+                    -Dsonar.host.url=https://sonarcloud.io \
+                    -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+                    -X
+
+~> Understanding the Overall YAML Structure
+    A GitHub Actions workflow generally follows this hierarchy:
+    Diagram:
+        Workflow
+            │
+            ├── name
+            │
+            ├── on
+            │   ├── push
+            │   └── pull_request
+            │
+            └── jobs
+                  │
+                  └── build-and-sonar
+                        │
+                        ├── runs-on
+                        │
+                        └── steps
+                              │
+                              ├── Checkout source code
+                              ├── Set up Java
+                              ├── Build and test
+                              ├── Update dependency graph
+                              └── SonarQube analysis
+    In simplified form:
+        name: Workflow Name
+        on:
+            # When should it run?
+            push:
+                branches: ["main"]
+        jobs:
+        job-name:
+            # Where should it run?
+            runs-on: ubuntu-latest
+            # What should it do?
+            steps:
+            - name: Step 1
+                run: command
+            - name: Step 2
+                uses: some/action@version
+
+~> Important Keywords
+    Keyword	        =>          Purpose
+    name	        =>          Name of the workflow
+    on	            =>          Defines workflow trigger events
+    push	        =>          Trigger when code is pushed
+    pull_request	=>          Trigger for pull-request events
+    branches	    =>          Restricts a trigger to specific branches
+    jobs	        =>          Defines jobs to execute
+    runs-on	        =>          Defines the runner/machine
+    steps	        =>          Defines individual tasks within a job
+    name	        =>          Gives a human-readable name to a step
+    run	            =>          Executes shell commands
+    uses	        =>          Uses an existing GitHub Action
+    with	        =>          Supplies configuration/input to an Action
+    secrets	        =>          Accesses GitHub Actions Secrets
+    cache	        =>          Configures dependency caching for supported setup actions
+
+~> Key Concept
+    The basic idea of GitHub Actions is:
+    Workflow:
+        Event occurs
+            ↓
+        Workflow is triggered
+            ↓
+        Job starts on a runner
+            ↓
+        Steps execute one by one 
+            ↓
+        Build / Test / Analysis / Deployment
+            ↓
+        Workflow completes
+    For example:
+        Developer pushes code to main
+                ↓
+        GitHub detects push
+                ↓
+        GitHub Actions starts
+                ↓
+        Ubuntu runner starts
+                ↓
+        Checkout source code
+                ↓
+        Setup Java 21
+                ↓
+        Run Maven build/tests
+                ↓
+        Run SonarQube analysis
+                ↓
+        Workflow completes
+    In short:
+        GitHub Actions allows us to describe an automated process in a YAML file, and GitHub executes that process automatically whenever the configured event occurs.

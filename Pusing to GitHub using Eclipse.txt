@@ -1,0 +1,68 @@
+~> Steps:
+    Step 1>
+        Right click on the Project
+    Step 2>
+        Go to Team
+    Step 3> 
+        Share Project
+    Step 4>
+        In Repository field,
+        CLick on Create button
+    Step 5>
+        In Repository directory,
+            Enter path of the project root folder
+        Default branch name: (Recommended: main)
+            main
+    Step 6>
+        CLick on Finish
+    Step 7>
+        Close Dialoge
+    Step 8>
+        Again go to Team and work with the given options
+    Step 9>
+        Commit 
+    Step 10>
+        Enter Commit meassage
+
+~> Connection with GithUb Remote Repo:
+    Step 1>
+        Click on Push head
+    Step 2>
+        Enter the details:
+            - URI	                =>  Paste the HTTPS URL from GitHuh:- Repo link.git (it will auto‑fill Host and Repository path)
+            - Host	                =>  Auto‑filled (e.g., github.com)
+            - Repository path	    =>  Auto‑filled (e.g., your-username/CalculatorProject.git)
+            - Protocol          	=>  https (or ssh if you use SSH keys)
+            - Port      	        =>  Leave empty (default)
+            - User	                =>  Your GitHub email 
+            - Password	            =>  Your GitHub personal access token (not your account password). Generate one here with repo permissions.
+    Step 3>
+        Then click Preview
+    Step 4>
+        click on advance settings>
+            Enter details again
+                Then click on Next
+    Step 5>
+        then keep:
+            Source: HEAD
+            destination ref: main
+            Remote ref to delete: (leave it empty)
+        Click on Add Specs
+        Keep Force push unchecked
+        PRess necx
+    Step 6>
+        Enter cretentials
+        → 
+    Token Generation:
+        Link:
+            https://github.com/settings/tokens
+        Path:
+            account Logo >
+            Setting >
+            Developer setting on the LHS >
+            Personal Access Tokens (Classic)
+
+Example tolen:
+    ghp_NmB5KspIRPhEk0i***9giWZ2rgr67G3qLKmR
+Example URI:
+    https://github.com/PR2309/Calulator_JavaMavenEclipseProject.git
